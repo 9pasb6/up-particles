@@ -7,7 +7,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f0f0f0;
+  background-color: #ffffff; /* Fondo blanco inicial */
 }
 
 .container {
@@ -50,7 +50,7 @@ body {
 }
 
 .with-bg {
-  background-color: rgba(255, 255, 255, 0.7); /* Fondo semitransparente blanco */
+  background-color: rgba(255, 255, 255, 0.7);
   padding: 10px 20px;
   border-radius: 10px;
 }
@@ -65,7 +65,7 @@ button {
 }
 
 #siBtn {
-  background-color: #009705; /* Verde */
+  background-color: #009705;
 }
 
 #siBtn:hover {
@@ -73,7 +73,7 @@ button {
 }
 
 #noBtn {
-  background-color: #FF5733; /* Rojo */
+  background-color: #FF5733;
 }
 
 #noBtn:hover {
@@ -84,4 +84,21 @@ button {
   display: flex;
   gap: 20px;
   justify-content: center;
+}
+
+/* Responsividad para dispositivos móviles */
+@media (max-width: 768px) {
+  #gifContainer img {
+    width: 80%;
+    max-height: 200px;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
+  #messageContainer {
+    font-size: 24px;
+  }
 }

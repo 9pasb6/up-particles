@@ -7,19 +7,37 @@ function App() {
   const [noButtonState, setNoButtonState] = useState(0);
   const [message, setMessage] = useState('');
   const [yesButtonSize, setYesButtonSize] = useState({ fontSize: '16px', padding: '10px 20px' });
-  const [showButtons, setShowButtons] = useState(true); 
-  const [backgroundImage, setBackgroundImage] = useState(''); 
-
-  const audioRef = useRef(null); // Referencia para el audio
+  const [showButtons, setShowButtons] = useState(true);
+  const [backgroundImage, setBackgroundImage] = useState(''); // Inicialmente sin fondo
+  const audioRef = useRef(null);
 
   const gifSequence = ['mocha5final.gif', 'mocha6final.gif', 'mocha7final.gif', 'mocha9final.gif'];
+
+  useEffect(() => {
+    const updateBackgroundForDevice = () => {
+      if (window.innerWidth <= 768) {
+        setBackgroundImage('/src/assets/mp2.jpeg'); // Fondo para móvil
+      } else {
+        setBackgroundImage('/src/assets/mp.png'); // Fondo para pantallas grandes
+      }
+    };
+
+    // Detectar dimensiones y configurar el fondo solo si "Sí" es clicado
+    if (showHappyGif) {
+      updateBackgroundForDevice();
+      window.addEventListener('resize', updateBackgroundForDevice);
+    }
+
+    return () => {
+      window.removeEventListener('resize', updateBackgroundForDevice);
+    };
+  }, [showHappyGif]);
 
   const handleYesClick = () => {
     setShowHappyGif(true);
     setMessage('¡Oh Siii!, Te Amo 🖤');
     setYesButtonSize({ fontSize: '16px', padding: '10px 20px' });
     setShowButtons(false);
-    setBackgroundImage('/src/assets/mp.png');
 
     // Reproducir la música
     if (audioRef.current) {
@@ -75,9 +93,14 @@ function App() {
   return (
     <div
       className="container"
-      style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+      style={{
+        backgroundImage: showHappyGif ? `url(${backgroundImage})` : '',
+        backgroundColor: showHappyGif ? 'transparent' : '#ffffff',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
     >
-      <audio ref={audioRef} src="/src/assets/admv.mp3" preload="auto" /> {/* Reproductor oculto */}
+      <audio ref={audioRef} src="/src/assets/admv.mp3" preload="auto" />
 
       <div id="gifContainer">
         <img src={`/src/assets/${currentGif}`} alt="Gif actual" />
