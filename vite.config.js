@@ -4,4 +4,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: '/San-Valentine/',
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',  
+  }
 })
