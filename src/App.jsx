@@ -8,7 +8,7 @@ function App() {
   const [message, setMessage] = useState('');
   const [yesButtonSize, setYesButtonSize] = useState({ fontSize: '16px', padding: '10px 20px' });
   const [showButtons, setShowButtons] = useState(true);
-  const [backgroundImage, setBackgroundImage] = useState(''); // Inicialmente sin fondo
+  const [backgroundImage, setBackgroundImage] = useState('');
   const audioRef = useRef(null);
 
   const gifSequence = ['mocha5final.gif', 'mocha6final.gif', 'mocha7final.gif', 'mocha9final.gif'];
@@ -16,13 +16,12 @@ function App() {
   useEffect(() => {
     const updateBackgroundForDevice = () => {
       if (window.innerWidth <= 768) {
-        setBackgroundImage('/src/assets/mp2.jpeg'); // Fondo para móvil
+        setBackgroundImage(`${import.meta.env.BASE_URL}assets/mp2.jpeg`);
       } else {
-        setBackgroundImage('/src/assets/mp.png'); // Fondo para pantallas grandes
+        setBackgroundImage(`${import.meta.env.BASE_URL}assets/mp.png`);
       }
     };
 
-    // Detectar dimensiones y configurar el fondo solo si "Sí" es clicado
     if (showHappyGif) {
       updateBackgroundForDevice();
       window.addEventListener('resize', updateBackgroundForDevice);
@@ -39,7 +38,6 @@ function App() {
     setYesButtonSize({ fontSize: '16px', padding: '10px 20px' });
     setShowButtons(false);
 
-    // Reproducir la música
     if (audioRef.current) {
       audioRef.current.play();
     }
@@ -100,10 +98,10 @@ function App() {
         backgroundPosition: 'center'
       }}
     >
-      <audio ref={audioRef} src="/src/assets/admv.mp3" preload="auto" />
+      <audio ref={audioRef} src={`${import.meta.env.BASE_URL}assets/admv.mp3`} preload="auto" />
 
       <div id="gifContainer">
-        <img src={`/src/assets/${currentGif}`} alt="Gif actual" />
+        <img src={`${import.meta.env.BASE_URL}assets/${currentGif}`} alt="Gif actual" />
       </div>
 
       <h1 id="question" className={showHappyGif ? 'with-bg' : ''}>
