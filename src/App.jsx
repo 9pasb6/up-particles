@@ -1,8 +1,23 @@
 import { useState, useEffect, useRef } from 'react';
 import './App.css';
 
+// Importación de archivos de assets
+import mpImage from './assets/mp.png';
+import mpMobileImage from './assets/mp2.jpeg';
+import audioFile from './assets/admv.mp3';
+
+// Importar los GIFs necesarios
+import mochaGif from './assets/mocha.gif';
+import mocha2Gif from './assets/mocha2.gif';
+import mocha3Gif from './assets/mocha3.gif';
+import mocha4Gif from './assets/mocha4.gif';
+import mocha5finalGif from './assets/mocha5final.gif';
+import mocha6finalGif from './assets/mocha6final.gif';
+import mocha7finalGif from './assets/mocha7final.gif';
+import mocha9finalGif from './assets/mocha9final.gif';
+
 function App() {
-  const [currentGif, setCurrentGif] = useState('mocha.gif');
+  const [currentGif, setCurrentGif] = useState(mochaGif);
   const [showHappyGif, setShowHappyGif] = useState(false);
   const [noButtonState, setNoButtonState] = useState(0);
   const [message, setMessage] = useState('');
@@ -11,14 +26,14 @@ function App() {
   const [backgroundImage, setBackgroundImage] = useState('');
   const audioRef = useRef(null);
 
-  const gifSequence = ['mocha5final.gif', 'mocha6final.gif', 'mocha7final.gif', 'mocha9final.gif'];
+  const gifSequence = [mocha5finalGif, mocha6finalGif, mocha7finalGif, mocha9finalGif];
 
   useEffect(() => {
     const updateBackgroundForDevice = () => {
       if (window.innerWidth <= 768) {
-        setBackgroundImage(`${import.meta.env.BASE_URL}assets/mp2.jpeg`);
+        setBackgroundImage(mpMobileImage);  // Fondo para móvil
       } else {
-        setBackgroundImage(`${import.meta.env.BASE_URL}assets/mp.png`);
+        setBackgroundImage(mpImage);        // Fondo para pantallas grandes
       }
     };
 
@@ -38,6 +53,7 @@ function App() {
     setYesButtonSize({ fontSize: '16px', padding: '10px 20px' });
     setShowButtons(false);
 
+    // Reproducir la música
     if (audioRef.current) {
       audioRef.current.play();
     }
@@ -54,15 +70,15 @@ function App() {
     let newMessage;
     switch (nextState) {
       case 1:
-        newGif = 'mocha2.gif';
+        newGif = mocha2Gif;
         newMessage = '¡Oh no! ¿Estás segura?';
         break;
       case 2:
-        newGif = 'mocha4.gif';
+        newGif = mocha4Gif;
         newMessage = '¡¿Realmente estas segura Amor?!';
         break;
       case 3:
-        newGif = 'mocha3.gif';
+        newGif = mocha3Gif;
         newMessage = 'Estás rompiendo mi corazón Maria :(';
         break;
       case 10:
@@ -73,7 +89,7 @@ function App() {
         setNoButtonState(0);
         break;
       default:
-        newGif = 'mocha2.gif';
+        newGif = mocha2Gif;
     }
 
     if (newGif) setCurrentGif(newGif);
@@ -98,10 +114,10 @@ function App() {
         backgroundPosition: 'center'
       }}
     >
-      <audio ref={audioRef} src={`${import.meta.env.BASE_URL}assets/admv.mp3`} preload="auto" />
+      <audio ref={audioRef} src={audioFile} preload="auto" />
 
       <div id="gifContainer">
-        <img src={`${import.meta.env.BASE_URL}assets/${currentGif}`} alt="Gif actual" />
+        <img src={currentGif} alt="Gif actual" />
       </div>
 
       <h1 id="question" className={showHappyGif ? 'with-bg' : ''}>
