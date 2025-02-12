@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import './App.css';
 
 // Importación de archivos de assets
-import mpImage from './assets/mp.png';
-import mpMobileImage from './assets/mp2.jpeg';
-import audioFile from './assets/admv.mp3';
+import mpImage from './assets/manuguaque.png';
+import mpMobileImage from './assets/manuguaque1.jpeg';
+import audioFile from './assets/Heather.mp3';
 
 // Importar los GIFs necesarios
 import mochaGif from './assets/mocha.gif';
@@ -75,11 +75,11 @@ function App() {
         break;
       case 2:
         newGif = mocha4Gif;
-        newMessage = '¡¿Realmente estas segura Amor?!';
+        newMessage = '¡¿Realmente estas segura?!';
         break;
       case 3:
         newGif = mocha3Gif;
-        newMessage = 'Estás rompiendo mi corazón Maria :(';
+        newMessage = 'Estás rompiendo mi corazón :(';
         break;
       case 10:
         newMessage = '¡Es broma, por favor di que sí!';
