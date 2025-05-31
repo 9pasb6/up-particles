@@ -1,151 +1,92 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import './App.css';
 
-// Importación de archivos de assets
-import mpImage from './assets/manuguaque.png';
-import mpMobileImage from './assets/manuguaque1.jpeg';
 import audioFile from './assets/Heather.mp3';
-
-// Importar los GIFs necesarios
-import mochaGif from './assets/mocha.gif';
-import mocha2Gif from './assets/mocha2.gif';
-import mocha3Gif from './assets/mocha3.gif';
-import mocha4Gif from './assets/mocha4.gif';
-import mocha5finalGif from './assets/mocha5final.gif';
-import mocha6finalGif from './assets/mocha6final.gif';
-import mocha7finalGif from './assets/mocha7final.gif';
-import mocha9finalGif from './assets/mocha9final.gif';
+import background2 from './assets/background2.jpg';
+import up3 from './assets/up3.png';
+import HeartParticles from './components/HeartParticles';
 
 function App() {
-  const [currentGif, setCurrentGif] = useState(mochaGif);
   const [showHappyGif, setShowHappyGif] = useState(false);
-  const [noButtonState, setNoButtonState] = useState(0);
   const [message, setMessage] = useState('');
-  const [yesButtonSize, setYesButtonSize] = useState({ fontSize: '16px', padding: '10px 20px' });
-  const [showButtons, setShowButtons] = useState(true);
-  const [backgroundImage, setBackgroundImage] = useState('');
+  const [showSecretButton, setShowSecretButton] = useState(false);
   const audioRef = useRef(null);
-
-  const gifSequence = [mocha5finalGif, mocha6finalGif, mocha7finalGif, mocha9finalGif];
-
-  useEffect(() => {
-    const updateBackgroundForDevice = () => {
-      if (window.innerWidth <= 768) {
-        setBackgroundImage(mpMobileImage);  // Fondo para móvil
-      } else {
-        setBackgroundImage(mpImage);        // Fondo para pantallas grandes
-      }
-    };
-
-    if (showHappyGif) {
-      updateBackgroundForDevice();
-      window.addEventListener('resize', updateBackgroundForDevice);
-    }
-
-    return () => {
-      window.removeEventListener('resize', updateBackgroundForDevice);
-    };
-  }, [showHappyGif]);
 
   const handleYesClick = () => {
     setShowHappyGif(true);
-    setMessage('¡Oh Siii!, Te Amo 🖤');
-    setYesButtonSize({ fontSize: '16px', padding: '10px 20px' });
-    setShowButtons(false);
+    setMessage('');
+    setShowSecretButton(true);
 
-    // Reproducir la música
     if (audioRef.current) {
       audioRef.current.play();
     }
-
-    gifSequence.forEach((gif, index) => {
-      setTimeout(() => setCurrentGif(gif), (index + 1) * 1000);
-    });
   };
 
-  const handleNoClick = () => {
-    const nextState = noButtonState + 1;
-
-    let newGif;
-    let newMessage;
-    switch (nextState) {
-      case 1:
-        newGif = mocha2Gif;
-        newMessage = '¡Oh no! ¿Estás segura?';
-        break;
-      case 2:
-        newGif = mocha4Gif;
-        newMessage = '¡¿Realmente estas segura?!';
-        break;
-      case 3:
-        newGif = mocha3Gif;
-        newMessage = 'Estás rompiendo mi corazón :(';
-        break;
-      case 10:
-        newMessage = '¡Es broma, por favor di que sí!';
-        break;
-      case 16:
-        newMessage = 'Por favoooooor...';
-        setNoButtonState(0);
-        break;
-      default:
-        newGif = mocha2Gif;
-    }
-
-    if (newGif) setCurrentGif(newGif);
-    if (newMessage) setMessage(newMessage);
-
-    setYesButtonSize((prevSize) => {
-      const fontSize = parseInt(prevSize.fontSize) + 4 + 'px';
-      const padding = parseInt(prevSize.padding.split(' ')[0]) + 10 + 'px ' + (parseInt(prevSize.padding.split(' ')[1]) + 10) + 'px';
-      return { fontSize, padding };
-    });
-
-    setNoButtonState(nextState);
+  const handleSecretClick = () => {
+    setMessage('Con quien deseo tener miles de aventuras y envejecer es contigo, Te Amo 💙');
+    setShowSecretButton(false);
+    setTimeout(() => {
+      setMessage('');
+    }, 8000);
   };
 
   return (
-    <div
-      className="container"
-      style={{
-        backgroundImage: showHappyGif ? `url(${backgroundImage})` : '',
-        backgroundColor: showHappyGif ? 'transparent' : '#ffffff',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      }}
-    >
-      <audio ref={audioRef} src={audioFile} preload="auto" />
-
-      <div id="gifContainer">
-        <img src={currentGif} alt="Gif actual" />
-      </div>
-
-      <h1 id="question" className={showHappyGif ? 'with-bg' : ''}>
-        ¿Quieres ser mi San Valentín?
-      </h1>
-
-      <div
-        id="messageContainer"
-        className={showHappyGif ? 'with-bg' : ''}
-        style={{ display: message ? 'block' : 'none' }}
-      >
-        {message}
-      </div>
-
-      {showButtons && (
-        <div className="button-container">
-          <button
-            id="siBtn"
-            onClick={handleYesClick}
-            style={yesButtonSize}
-          >
-            Sí
-          </button>
-          <button id="noBtn" onClick={handleNoClick}>
-            No
-          </button>
-        </div>
+    <div className="main-wrapper">
+      {/* Fondo final */}
+      {showHappyGif && (
+        <div
+          className="background-layer"
+          style={{ backgroundImage: `url(${background2})` }}
+        ></div>
       )}
+
+      <div className="container">
+        <audio ref={audioRef} src={audioFile} preload="auto" />
+
+        {/* Botón para iniciar */}
+        {!showHappyGif && (
+          <div className="button-container">
+            <button
+              id="siBtn"
+              onClick={handleYesClick}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                padding: 0,
+                margin: 0,
+                cursor: 'pointer',
+              }}
+            >
+              <img
+                src={up3}
+                alt="Abrir"
+                className="start-image-button"
+                style={{ width: '100px', height: 'auto', display: 'block' }}
+              />
+            </button>
+
+          </div>
+        )}
+
+        {/* Mensaje especial */}
+        {message && (
+          <div id="messageContainer" className="with-bg">
+            {message}
+          </div>
+        )}
+
+        {/* Botón secreto */}
+        {showSecretButton && (
+          <div className="secret-button-wrapper">
+            <button className="secret-button" onClick={handleSecretClick}>
+              💌
+            </button>
+          </div>
+        )}
+
+        {/* Corazones animados */}
+        {showHappyGif && <HeartParticles imageSrc="up.png" />}
+      </div>
     </div>
   );
 }

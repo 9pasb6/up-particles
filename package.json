@@ -1,6 +1,6 @@
 {
-  "name": "san-valentin-manuguaque",
-  "homepage": "https://9pasb6.github.io/manuguaque/",
+  "name": "up",
+  "homepage": "https://9pasb6.github.io/up/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,6 +13,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "particlesjs": "^2.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
